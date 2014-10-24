@@ -45,6 +45,7 @@
 /******************************************************************************/
 #include <functional>
 #include <utility>
+#include <algorithm>
 #include <vector>
 #include <unordered_map>
 
@@ -56,7 +57,8 @@ template<int I>
 struct std::is_placeholder<placeholderpack<I>> 
     : std::integral_constant<int, I+1>{};
 
-
+namespace wire
+{
 /******************************************************************************/
 /**
  *  Standard Wire object for many-to-many relationships. A wire can be 
@@ -82,7 +84,7 @@ public:
         m_fn.clear();
     }
 
-    inline void operator()( Args... params )
+    inline void operator()( Args... params ) const
     {
         for( const auto& p : m_fn ) p( params... );
     }
@@ -143,7 +145,7 @@ public:
 #endif
     }
 
-    inline void operator()( unsigned int idx, Args... params )
+    inline void operator()( unsigned int idx, Args... params ) const
     {
         if( m_fn.count( idx ) > 0 ) 
             m_fn.at( idx )( params... );
@@ -171,4 +173,5 @@ private:
 
 
 /******************************************************************************/
+}
 #endif // _WIRE_H

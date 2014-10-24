@@ -4,6 +4,7 @@
 #include <iostream>
 // #define WIRE_USE_EXCEPTIONS
 #include "wire.h"
+using namespace wire;
 
 class Button
 {
